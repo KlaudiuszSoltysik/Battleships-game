@@ -11,44 +11,47 @@ class Game extends StatefulWidget {
 class _GameState extends State<Game> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Container(
-        color: Colors.white,
-        child: Column(
-          children: const <Widget>[
-            Text(
-              "YOUR TURN",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.black,
-                decoration: TextDecoration.none,
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
+    return Container(
+      color: Colors.white,
+      child: SafeArea(
+        child: Container(
+          color: Colors.white,
+          child: Column(
+            children: const <Widget>[
+              Text(
+                "YOUR TURN",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                  decoration: TextDecoration.none,
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            Text(
-              "YOUR ARMY",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.black,
-                decoration: TextDecoration.none,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+              Text(
+                "YOUR ARMY",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                  decoration: TextDecoration.none,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            GameGrid(),
-            Text(
-              "RADAR",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.black,
-                decoration: TextDecoration.none,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+              GameGrid(),
+              Text(
+                "RADAR",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                  decoration: TextDecoration.none,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            GameGrid(),
-          ],
+              GameGrid(),
+            ],
+          ),
         ),
       ),
     );
