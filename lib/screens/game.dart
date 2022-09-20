@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:battleships/components/components.dart';
 
 class Game extends StatefulWidget {
-  const Game({Key? key}) : super(key: key);
+  Game({super.key});
 
   @override
   State<Game> createState() => _GameState();
@@ -17,7 +17,7 @@ class _GameState extends State<Game> {
         child: Container(
           color: Colors.white,
           child: Column(
-            children: const <Widget>[
+            children: <Widget>[
               Text(
                 "YOUR TURN",
                 textAlign: TextAlign.center,
@@ -49,7 +49,7 @@ class _GameState extends State<Game> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              GameGrid(),
+              GameGrid(unlocked: false),
             ],
           ),
         ),

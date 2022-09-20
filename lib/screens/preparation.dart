@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:battleships/components/components.dart';
 
 class Preparation extends StatefulWidget {
-  const Preparation({Key? key}) : super(key: key);
+  Preparation({super.key});
 
   @override
   State<Preparation> createState() => _PreparationState();
@@ -11,6 +11,8 @@ class Preparation extends StatefulWidget {
 class _PreparationState extends State<Preparation> {
   @override
   Widget build(BuildContext context) {
+    GameGrid playerGrid = GameGrid();
+
     return Container(
       color: Colors.white,
       child: SafeArea(
@@ -20,16 +22,17 @@ class _PreparationState extends State<Preparation> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              const Text(
+              Text(
                 "PREPARE YOUR GRID",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    color: Colors.black,
-                    decoration: TextDecoration.none,
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold),
+                  color: Colors.black,
+                  decoration: TextDecoration.none,
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-              const GameGrid(),
+              playerGrid,
               Button(
                 function: () {
                   Navigator.pushNamed(context, "/game");
@@ -42,7 +45,7 @@ class _PreparationState extends State<Preparation> {
                   children: <Widget>[
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const <Widget>[
+                      children: <Widget>[
                         Text(
                           "5 X ",
                           style: TextStyle(
@@ -57,7 +60,7 @@ class _PreparationState extends State<Preparation> {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const <Widget>[
+                      children: <Widget>[
                         Text(
                           "4 X ",
                           style: TextStyle(
@@ -73,7 +76,7 @@ class _PreparationState extends State<Preparation> {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const <Widget>[
+                      children: <Widget>[
                         Text(
                           "3 X ",
                           style: TextStyle(
@@ -90,7 +93,7 @@ class _PreparationState extends State<Preparation> {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const <Widget>[
+                      children: <Widget>[
                         Text(
                           "2 X ",
                           style: TextStyle(
@@ -108,7 +111,7 @@ class _PreparationState extends State<Preparation> {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const <Widget>[
+                      children: <Widget>[
                         Text(
                           "1 X ",
                           style: TextStyle(

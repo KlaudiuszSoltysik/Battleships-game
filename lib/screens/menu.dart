@@ -3,7 +3,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:battleships/components/components.dart';
 
 class Menu extends StatelessWidget {
-  const Menu({Key? key}) : super(key: key);
+  Menu({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,11 +15,11 @@ class Menu extends StatelessWidget {
             children: <Widget>[
               TextLiquidFill(
                 text: "Battleships",
-                loadDuration: const Duration(seconds: 6),
-                waveDuration: const Duration(seconds: 3),
+                loadDuration: Duration(seconds: 6),
+                waveDuration: Duration(seconds: 3),
                 waveColor: Colors.black,
                 boxBackgroundColor: Colors.white,
-                textStyle: const TextStyle(
+                textStyle: TextStyle(
                   fontFamily: "UnifrakturMagunita",
                   decoration: TextDecoration.none,
                   fontSize: 70,
@@ -37,12 +37,12 @@ class Menu extends StatelessWidget {
                       },
                       text: "SINGLEPLAYER",
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20),
                     Button(
                       function: () {},
                       text: "MULTIPLAYER",
                     ),
-                    const Input(),
+                    Input(),
                   ],
                 ),
               ),
