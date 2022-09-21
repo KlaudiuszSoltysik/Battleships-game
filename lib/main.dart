@@ -3,12 +3,21 @@ import 'package:flutter/services.dart';
 import 'screens/menu.dart';
 import 'screens/game.dart';
 import 'screens/preparation.dart';
+import 'package:provider/provider.dart';
+import 'package:battleships/components/components.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => Brain()),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatelessWidget with ChangeNotifier {
   MyApp({super.key});
 
   @override
