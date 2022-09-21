@@ -31,6 +31,7 @@ class _PreparationState extends State<Preparation> with ChangeNotifier {
             ),
             GameGrid(),
             Button(
+              color: !context.watch<Brain>().accept ? Colors.red : Colors.black,
               function: () {
                 Navigator.pushNamed(context, "/game");
               },
@@ -44,9 +45,11 @@ class _PreparationState extends State<Preparation> with ChangeNotifier {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        "5 X ",
+                        "${5 - context.watch<Brain>().ship1} X ",
                         style: TextStyle(
-                          color: Colors.black,
+                          color: context.watch<Brain>().ship1 > 5
+                              ? Colors.red
+                              : Colors.black,
                           decoration: TextDecoration.none,
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
@@ -59,9 +62,11 @@ class _PreparationState extends State<Preparation> with ChangeNotifier {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        "4 X ",
+                        "${4 - context.watch<Brain>().ship2} X ",
                         style: TextStyle(
-                          color: Colors.black,
+                          color: context.watch<Brain>().ship2 > 4
+                              ? Colors.red
+                              : Colors.black,
                           decoration: TextDecoration.none,
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
@@ -75,9 +80,11 @@ class _PreparationState extends State<Preparation> with ChangeNotifier {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        "3 X ",
+                        "${3 - context.watch<Brain>().ship3} X ",
                         style: TextStyle(
-                          color: Colors.black,
+                          color: context.watch<Brain>().ship3 > 3
+                              ? Colors.red
+                              : Colors.black,
                           decoration: TextDecoration.none,
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
@@ -92,9 +99,11 @@ class _PreparationState extends State<Preparation> with ChangeNotifier {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        "2 X ",
+                        "${2 - context.watch<Brain>().ship4} X ",
                         style: TextStyle(
-                          color: Colors.black,
+                          color: context.watch<Brain>().ship4 > 2
+                              ? Colors.red
+                              : Colors.black,
                           decoration: TextDecoration.none,
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
@@ -110,9 +119,11 @@ class _PreparationState extends State<Preparation> with ChangeNotifier {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        "1 X ",
+                        "${1 - context.watch<Brain>().ship5} X ",
                         style: TextStyle(
-                          color: Colors.black,
+                          color: context.watch<Brain>().ship5 > 1
+                              ? Colors.red
+                              : Colors.black,
                           decoration: TextDecoration.none,
                           fontSize: 30,
                           fontWeight: FontWeight.bold,

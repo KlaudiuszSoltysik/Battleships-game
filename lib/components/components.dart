@@ -5,19 +5,24 @@ import 'package:provider/provider.dart';
 class Button extends StatelessWidget {
   final String text;
   final VoidCallback function;
+  Color color;
 
-  Button({super.key, required this.text, required this.function});
+  Button(
+      {super.key,
+      required this.text,
+      required this.function,
+      this.color = Colors.black});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: function,
+      onTap: context.watch<Brain>().accept ? function : () {},
       child: Padding(
         padding: EdgeInsets.all(10),
         child: Container(
           height: 55,
           decoration: BoxDecoration(
-            color: Colors.black,
+            color: color,
             borderRadius: BorderRadius.all(
               Radius.circular(25),
             ),
@@ -327,11 +332,11 @@ class Brain with ChangeNotifier {
     for (int i = 0; i < 10; i++) {
       for (int j = 0; j < 10; j++) {
         shipLength = 0;
-        if (icon[i][j] == Icons.square) {
+        if (icon[j][i] == Icons.square) {
           shipLength++;
-          for (int k = 1; k < 5; k++) {
-            if (i + k < 10) {
-              if (icon[i + k][j] == Icons.square) {
+          for (int k = 1; k < 6; k++) {
+            if (j + k < 10) {
+              if (icon[j + k][i] == Icons.square) {
                 shipLength++;
               } else {
                 break;
@@ -341,21 +346,18 @@ class Brain with ChangeNotifier {
             }
           }
           if (shipLength > 5) {
+            icon[j + shipLength - 1][i] = Icons.square_outlined;
             ship5++;
-            shipLength -= 5;
-            for (int i = 0; i < shipLength; i++) {
-              ship1++;
-            }
           } else if (shipLength == 5) {
             ship5++;
           } else if (shipLength == 4) {
             ship4++;
-          } else if (shipLength == 4) {
+          } else if (shipLength == 3) {
             ship3++;
-          } else if (shipLength == 4) {
+          } else if (shipLength == 2) {
             ship2++;
           }
-          i += shipLength - 1;
+          j += shipLength - 1;
         }
       }
     }
@@ -364,7 +366,7 @@ class Brain with ChangeNotifier {
         shipLength = 0;
         if (icon[i][j] == Icons.square) {
           shipLength++;
-          for (int k = 1; k < 5; k++) {
+          for (int k = 1; k < 6; k++) {
             if (j + k < 10) {
               if (icon[i][j + k] == Icons.square) {
                 shipLength++;
@@ -376,11 +378,8 @@ class Brain with ChangeNotifier {
             }
           }
           if (shipLength > 5) {
+            icon[i][j + shipLength - 1] = Icons.square_outlined;
             ship5++;
-            shipLength -= 5;
-            for (int i = 0; i < shipLength; i++) {
-              ship1++;
-            }
           } else if (shipLength == 5) {
             ship5++;
           } else if (shipLength == 4) {
@@ -418,35 +417,40 @@ class Brain with ChangeNotifier {
               ship1++;
             }
           } else if (i == 0) {
-            if ((icon[i + 1][j] == Icons.square) &
-                (icon[i][j - 1] == Icons.square) &
-                (icon[i][j + 1] == Icons.square)) {
+            if ((icon[i + 1][j] == Icons.square_outlined) &
+                (icon[i][j - 1] == Icons.square_outlined) &
+                (icon[i][j + 1] == Icons.square_outlined)) {
               ship1++;
             }
           } else if (i == 9) {
-            if ((icon[i - 1][j] == Icons.square) &
-                (icon[i][j - 1] == Icons.square) &
-                (icon[i][j + 1] == Icons.square)) {
+            if ((icon[i - 1][j] == Icons.square_outlined) &
+                (icon[i][j - 1] == Icons.square_outlined) &
+                (icon[i][j + 1] == Icons.square_outlined)) {
               ship1++;
             }
           } else if (j == 0) {
-            if ((icon[i + 1][j] == Icons.square) &
-                (icon[i - 1][j] == Icons.square) &
-                (icon[i][j + 1] == Icons.square)) {
+            if ((icon[i + 1][j] == Icons.square_outlined) &
+                (icon[i - 1][j] == Icons.square_outlined) &
+                (icon[i][j + 1] == Icons.square_outlined)) {
               ship1++;
             }
           } else if (j == 9) {
-            if ((icon[i + 1][j] == Icons.square) &
-                (icon[i - 1][j] == Icons.square) &
-                (icon[i][j - 1] == Icons.square)) {
+            if ((icon[i + 1][j] == Icons.square_outlined) &
+                (icon[i - 1][j] == Icons.square_outlined) &
+                (icon[i][j - 1] == Icons.square_outlined)) {
               ship1++;
             }
+          } else if ((icon[i + 1][j] == Icons.square_outlined) &
+              (icon[i - 1][j] == Icons.square_outlined) &
+              (icon[i][j + 1] == Icons.square_outlined) &
+              (icon[i][j - 1] == Icons.square_outlined)) {
+            ship1++;
           }
           segments++;
         }
       }
     }
-    if (segments == 20) {
+    if (segments == 35) {
       accept = true;
     } else {
       accept = false;
@@ -456,6 +460,5 @@ class Brain with ChangeNotifier {
     print("ship 3 $ship3");
     print("ship 2 $ship2");
     print("ship 1 $ship1");
-    print("accept $accept");
   }
 }
