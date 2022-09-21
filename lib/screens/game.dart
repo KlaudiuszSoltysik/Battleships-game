@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:battleships/components/components.dart';
+import '../components/components.dart';
 import 'package:provider/provider.dart';
+import '../components/providerClass.dart';
 
 class Game extends StatefulWidget {
   Game({super.key});

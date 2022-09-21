@@ -4,7 +4,7 @@ import 'screens/menu.dart';
 import 'screens/game.dart';
 import 'screens/preparation.dart';
 import 'package:provider/provider.dart';
-import 'package:battleships/components/components.dart';
+import '../components/providerClass.dart';
 
 void main() {
   runApp(
