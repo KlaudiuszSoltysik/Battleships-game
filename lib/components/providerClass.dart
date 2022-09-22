@@ -261,6 +261,93 @@ class AI extends Brain {
         ship5pos.add(temp2);
       }
     }
+    for (int i = 0; i < 6; i++) {
+      for (int j = 0; j < 10; j++) {
+        List<List<int>> temp2 = [];
+        for (int k = i; k < i + 5; k++) {
+          List<int> temp = [];
+          temp.add(k);
+          temp.add(i);
+          temp2.add(temp);
+        }
+        ship5pos.add(temp2);
+      }
+    }
+
+    for (int i = 0; i < 10; i++) {
+      for (int j = 0; j < 7; j++) {
+        List<List<int>> temp2 = [];
+        for (int k = j; k < j + 4; k++) {
+          List<int> temp = [];
+          temp.add(i);
+          temp.add(k);
+          temp2.add(temp);
+        }
+        ship4pos.add(temp2);
+      }
+    }
+    for (int i = 0; i < 7; i++) {
+      for (int j = 0; j < 10; j++) {
+        List<List<int>> temp2 = [];
+        for (int k = i; k < i + 4; k++) {
+          List<int> temp = [];
+          temp.add(k);
+          temp.add(i);
+          temp2.add(temp);
+        }
+        ship4pos.add(temp2);
+      }
+    }
+
+    for (int i = 0; i < 10; i++) {
+      for (int j = 0; j < 8; j++) {
+        List<List<int>> temp2 = [];
+        for (int k = j; k < j + 3; k++) {
+          List<int> temp = [];
+          temp.add(i);
+          temp.add(k);
+          temp2.add(temp);
+        }
+        ship3pos.add(temp2);
+      }
+    }
+    for (int i = 0; i < 8; i++) {
+      for (int j = 0; j < 10; j++) {
+        List<List<int>> temp2 = [];
+        for (int k = i; k < i + 3; k++) {
+          List<int> temp = [];
+          temp.add(k);
+          temp.add(i);
+          temp2.add(temp);
+        }
+        ship3pos.add(temp2);
+      }
+    }
+
+    for (int i = 0; i < 10; i++) {
+      for (int j = 0; j < 9; j++) {
+        List<List<int>> temp2 = [];
+        for (int k = j; k < j + 2; k++) {
+          List<int> temp = [];
+          temp.add(i);
+          temp.add(k);
+          temp2.add(temp);
+        }
+        ship2pos.add(temp2);
+      }
+    }
+    for (int i = 0; i < 9; i++) {
+      for (int j = 0; j < 10; j++) {
+        List<List<int>> temp2 = [];
+        for (int k = i; k < i + 2; k++) {
+          List<int> temp = [];
+          temp.add(k);
+          temp.add(i);
+          temp2.add(temp);
+        }
+        ship2pos.add(temp2);
+      }
+    }
 
     for (int i = 0; i < 10; i++) {
       for (int j = 0; j < 10; j++) {
@@ -273,8 +360,6 @@ class AI extends Brain {
   }
 
   void randomizeBoard() {
-    print(ship5pos);
-
     for (int i = 0; i < 10; i++) {
       for (int j = 0; j < 10; j++) {
         if (ship[i][j] == true) {
