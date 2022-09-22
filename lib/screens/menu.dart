@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import '../components/components.dart';
 
-class Menu extends StatelessWidget with ChangeNotifier {
+class Menu extends StatelessWidget {
   Menu({super.key});
 
   @override

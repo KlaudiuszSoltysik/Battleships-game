@@ -10,9 +10,10 @@ class Game extends StatefulWidget {
   State<Game> createState() => _GameState();
 }
 
-class _GameState extends State<Game> with ChangeNotifier {
+class _GameState extends State<Game> {
   @override
   Widget build(BuildContext context) {
+    // context.watch<AI>().randomizeBoard();
     return Container(
       color: Colors.white,
       child: SafeArea(
@@ -49,7 +50,7 @@ class _GameState extends State<Game> with ChangeNotifier {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            GameGrid(),
+            RandomGameGrid(),
           ],
         ),
       ),

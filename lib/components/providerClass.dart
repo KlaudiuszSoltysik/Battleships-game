@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'components.dart';
+import 'dart:math';
 
 class Brain with ChangeNotifier {
   int ship5 = 0;
@@ -9,129 +10,17 @@ class Brain with ChangeNotifier {
   int ship1 = 0;
   bool accept = false;
   bool lock = false;
-  List<List<Square>> squareList = [];
-  List<List<IconData>> icon = [
-    [
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined
-    ],
-    [
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined
-    ],
-    [
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined
-    ],
-    [
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined
-    ],
-    [
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined
-    ],
-    [
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined
-    ],
-    [
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined
-    ],
-    [
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined
-    ],
-    [
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined
-    ],
-    [
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined,
-      Icons.square_outlined
-    ]
-  ];
+  List<List<IconData>> icon = [];
+
+  void init() {
+    for (int i = 0; i < 10; i++) {
+      List<IconData> temp = [];
+      for (int j = 0; j < 10; j++) {
+        temp.add(Icons.square_outlined);
+      }
+      icon.add(temp);
+    }
+  }
 
   void placeShip({required x, required y}) {
     if (!lock) {
@@ -182,11 +71,15 @@ class Brain with ChangeNotifier {
         }
       }
       notifyListeners();
-      checkLength();
+      if (checkLength()) {
+        accept = true;
+      } else {
+        accept = false;
+      }
     }
   }
 
-  void checkLength() {
+  bool checkLength() {
     ship5 = 0;
     ship4 = 0;
     ship3 = 0;
@@ -317,10 +210,93 @@ class Brain with ChangeNotifier {
         }
       }
     }
-    if (segments == 35) {
-      accept = true;
+    if ((segments == 35) &
+        (ship1 == 5) &
+        (ship2 == 4) &
+        (ship3 == 3) &
+        (ship4 == 2) &
+        (ship5 == 1)) {
+      return true;
     } else {
-      accept = false;
+      return false;
     }
+  }
+}
+
+class AI extends Brain {
+  List<List<bool>> ship = [];
+  List<List<List<int>>> ship5pos = [];
+  List<List<List<int>>> ship4pos = [];
+  List<List<List<int>>> ship3pos = [];
+  List<List<List<int>>> ship2pos = [];
+  List<List<int>> ship1pos = [];
+
+  @override
+  void init() {
+    for (int i = 0; i < 10; i++) {
+      List<IconData> temp = [];
+      for (int j = 0; j < 10; j++) {
+        temp.add(Icons.square_outlined);
+      }
+      icon.add(temp);
+    }
+
+    for (int i = 0; i < 10; i++) {
+      List<bool> temp = [];
+      for (int i = 0; i < 10; i++) {
+        temp.add(false);
+      }
+      ship.add(temp);
+    }
+
+    for (int i = 0; i < 10; i++) {
+      for (int j = 0; j < 6; j++) {
+        List<List<int>> temp2 = [];
+        for (int k = j; k < j + 5; k++) {
+          List<int> temp = [];
+          temp.add(i);
+          temp.add(k);
+          temp2.add(temp);
+        }
+        ship5pos.add(temp2);
+      }
+    }
+
+    for (int i = 0; i < 10; i++) {
+      for (int j = 0; j < 10; j++) {
+        List<int> temp = [];
+        temp.add(i);
+        temp.add(j);
+        ship1pos.add(temp);
+      }
+    }
+  }
+
+  void randomizeBoard() {
+    print(ship5pos);
+
+    for (int i = 0; i < 10; i++) {
+      for (int j = 0; j < 10; j++) {
+        if (ship[i][j] == true) {
+          icon[i][j] = Icons.square;
+        }
+      }
+    }
+    notifyListeners();
+  }
+
+  void clearBoard() {
+    for (int i = 0; i < 10; i++) {
+      for (int j = 0; j < 10; j++) {
+        icon[i][j] = Icons.square_outlined;
+        ship[i][j] = false;
+      }
+    }
+    notifyListeners();
+  }
+
+  void fire({required x, required y}) {
+    clearBoard();
+    randomizeBoard();
   }
 }

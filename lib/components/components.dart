@@ -79,16 +79,16 @@ class Input extends StatelessWidget {
   }
 }
 
-class GameGrid extends StatelessWidget with ChangeNotifier {
+class GameGrid extends StatelessWidget {
   GameGrid({super.key});
 
-  List<Widget> createGrid() {
+  List<Widget> createGrid(place) {
     List<Widget> rowList = [];
 
     for (int x = 0; x < 10; x++) {
       List<Widget> iconList = [];
       for (int y = 0; y < 10; y++) {
-        Square temp = Square(x: x, y: y);
+        Square temp = Square(x: x, y: y, place: place);
         iconList.add(
           Expanded(
             child: AspectRatio(
@@ -108,17 +108,32 @@ class GameGrid extends StatelessWidget with ChangeNotifier {
     return Expanded(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: createGrid(),
+        children: createGrid(true),
       ),
     );
   }
 }
 
-class Square extends StatefulWidget with ChangeNotifier {
+class RandomGameGrid extends GameGrid {
+  RandomGameGrid({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: createGrid(false),
+      ),
+    );
+  }
+}
+
+class Square extends StatefulWidget {
   int x;
   int y;
+  bool place;
 
-  Square({super.key, required this.x, required this.y});
+  Square({super.key, required this.x, required this.y, required this.place});
 
   @override
   State<Square> createState() => _SquareState();
@@ -129,11 +144,17 @@ class _SquareState extends State<Square> {
     context.read<Brain>().placeShip(x: widget.x, y: widget.y);
   }
 
+  void fire() {
+    context.read<AI>().fire(x: widget.x, y: widget.y);
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: placeShip,
-      child: Icon(context.watch<Brain>().icon[widget.x][widget.y]),
+      onTap: widget.place ? placeShip : fire,
+      child: widget.place
+          ? Icon(context.watch<Brain>().icon[widget.x][widget.y])
+          : Icon(context.watch<AI>().icon[widget.x][widget.y]),
     );
   }
 }

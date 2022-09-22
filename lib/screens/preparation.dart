@@ -10,7 +10,7 @@ class Preparation extends StatefulWidget {
   State<Preparation> createState() => _PreparationState();
 }
 
-class _PreparationState extends State<Preparation> with ChangeNotifier {
+class _PreparationState extends State<Preparation> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,7 +36,7 @@ class _PreparationState extends State<Preparation> with ChangeNotifier {
               color: !context.read<Brain>().accept ? Colors.red : Colors.black,
               function: () {
                 Navigator.pushNamed(context, "/game");
-                context.read()<Brain>().lock = true;
+                context.read<Brain>().lock = true;
               },
               text: "ACCEPT",
             ),
@@ -48,9 +48,9 @@ class _PreparationState extends State<Preparation> with ChangeNotifier {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        "${5 - context.read<Brain>().ship1} X ",
+                        "${5 - context.watch<Brain>().ship1} X ",
                         style: TextStyle(
-                          color: context.read<Brain>().ship1 > 5
+                          color: context.watch<Brain>().ship1 > 5
                               ? Colors.red
                               : Colors.black,
                           decoration: TextDecoration.none,
@@ -65,9 +65,9 @@ class _PreparationState extends State<Preparation> with ChangeNotifier {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        "${4 - context.read<Brain>().ship2} X ",
+                        "${4 - context.watch<Brain>().ship2} X ",
                         style: TextStyle(
-                          color: context.read<Brain>().ship2 > 4
+                          color: context.watch<Brain>().ship2 > 4
                               ? Colors.red
                               : Colors.black,
                           decoration: TextDecoration.none,
@@ -83,9 +83,9 @@ class _PreparationState extends State<Preparation> with ChangeNotifier {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        "${3 - context.read<Brain>().ship3} X ",
+                        "${3 - context.watch<Brain>().ship3} X ",
                         style: TextStyle(
-                          color: context.read<Brain>().ship3 > 3
+                          color: context.watch<Brain>().ship3 > 3
                               ? Colors.red
                               : Colors.black,
                           decoration: TextDecoration.none,
@@ -102,9 +102,9 @@ class _PreparationState extends State<Preparation> with ChangeNotifier {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        "${2 - context.read<Brain>().ship4} X ",
+                        "${2 - context.watch<Brain>().ship4} X ",
                         style: TextStyle(
-                          color: context.read<Brain>().ship4 > 2
+                          color: context.watch<Brain>().ship4 > 2
                               ? Colors.red
                               : Colors.black,
                           decoration: TextDecoration.none,
@@ -122,9 +122,9 @@ class _PreparationState extends State<Preparation> with ChangeNotifier {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        "${1 - context.read<Brain>().ship5} X ",
+                        "${1 - context.watch<Brain>().ship5} X ",
                         style: TextStyle(
-                          color: context.read<Brain>().ship5 > 1
+                          color: context.watch<Brain>().ship5 > 1
                               ? Colors.red
                               : Colors.black,
                           decoration: TextDecoration.none,
