@@ -12,6 +12,11 @@ class Game extends StatefulWidget {
 
 class _GameState extends State<Game> {
   @override
+  void initState() {
+    context.read<AI>().randomizeBoard();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,

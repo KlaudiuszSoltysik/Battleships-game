@@ -13,7 +13,7 @@ class Brain with ChangeNotifier {
   bool lock = false;
   List<List<IconData>> icon = [];
 
-  void init() {
+  Brain() {
     for (int i = 0; i < 10; i++) {
       List<IconData> temp = [];
       for (int j = 0; j < 10; j++) {
@@ -23,51 +23,12 @@ class Brain with ChangeNotifier {
     }
   }
 
-  void placeShip({required x, required y}) {
+  void placeShip({required int x, required int y}) {
     if (!lock) {
       if (icon[x][y] == Icons.square) {
         icon[x][y] = Icons.square_outlined;
       } else {
-        if ((x == 0) & (y == 0)) {
-          if (icon[x + 1][y + 1] == Icons.square_outlined) {
-            icon[x][y] = Icons.square;
-          }
-        } else if ((x == 0) & (y == 9)) {
-          if (icon[x + 1][y - 1] == Icons.square_outlined) {
-            icon[x][y] = Icons.square;
-          }
-        } else if ((x == 9) & (y == 0)) {
-          if (icon[x - 1][y + 1] == Icons.square_outlined) {
-            icon[x][y] = Icons.square;
-          }
-        } else if ((x == 9) & (y == 9)) {
-          if (icon[x - 1][y - 1] == Icons.square_outlined) {
-            icon[x][y] = Icons.square;
-          }
-        } else if (x == 0) {
-          if ((icon[x + 1][y + 1] == Icons.square_outlined) &
-              (icon[x + 1][y - 1] == Icons.square_outlined)) {
-            icon[x][y] = Icons.square;
-          }
-        } else if (x == 9) {
-          if ((icon[x - 1][y + 1] == Icons.square_outlined) &
-              (icon[x - 1][y - 1] == Icons.square_outlined)) {
-            icon[x][y] = Icons.square;
-          }
-        } else if (y == 0) {
-          if ((icon[x + 1][y + 1] == Icons.square_outlined) &
-              (icon[x - 1][y + 1] == Icons.square_outlined)) {
-            icon[x][y] = Icons.square;
-          }
-        } else if (y == 9) {
-          if ((icon[x + 1][y - 1] == Icons.square_outlined) &
-              (icon[x - 1][y - 1] == Icons.square_outlined)) {
-            icon[x][y] = Icons.square;
-          }
-        } else if ((icon[x + 1][y + 1] == Icons.square_outlined) &
-            (icon[x + 1][y - 1] == Icons.square_outlined) &
-            (icon[x - 1][y + 1] == Icons.square_outlined) &
-            (icon[x - 1][y - 1] == Icons.square_outlined)) {
+        if (validate(x, y)) {
           icon[x][y] = Icons.square;
         }
       }
@@ -79,6 +40,52 @@ class Brain with ChangeNotifier {
         accept = false;
       }
     }
+  }
+
+  bool validate(int x, int y) {
+    if ((x == 0) & (y == 0)) {
+      if (icon[x + 1][y + 1] == Icons.square_outlined) {
+        return true;
+      }
+    } else if ((x == 0) & (y == 9)) {
+      if (icon[x + 1][y - 1] == Icons.square_outlined) {
+        return true;
+      }
+    } else if ((x == 9) & (y == 0)) {
+      if (icon[x - 1][y + 1] == Icons.square_outlined) {
+        return true;
+      }
+    } else if ((x == 9) & (y == 9)) {
+      if (icon[x - 1][y - 1] == Icons.square_outlined) {
+        return true;
+      }
+    } else if (x == 0) {
+      if ((icon[x + 1][y + 1] == Icons.square_outlined) &
+          (icon[x + 1][y - 1] == Icons.square_outlined)) {
+        return true;
+      }
+    } else if (x == 9) {
+      if ((icon[x - 1][y + 1] == Icons.square_outlined) &
+          (icon[x - 1][y - 1] == Icons.square_outlined)) {
+        return true;
+      }
+    } else if (y == 0) {
+      if ((icon[x + 1][y + 1] == Icons.square_outlined) &
+          (icon[x - 1][y + 1] == Icons.square_outlined)) {
+        return true;
+      }
+    } else if (y == 9) {
+      if ((icon[x + 1][y - 1] == Icons.square_outlined) &
+          (icon[x - 1][y - 1] == Icons.square_outlined)) {
+        return true;
+      }
+    } else if ((icon[x + 1][y + 1] == Icons.square_outlined) &
+        (icon[x + 1][y - 1] == Icons.square_outlined) &
+        (icon[x - 1][y + 1] == Icons.square_outlined) &
+        (icon[x - 1][y - 1] == Icons.square_outlined)) {
+      return true;
+    }
+    return false;
   }
 
   bool checkLength() {
@@ -230,6 +237,18 @@ class Brain with ChangeNotifier {
       return false;
     }
   }
+
+  bool receiveHit(int x, int y) {
+    if (icon[x][y] == Icons.square) {
+      icon[x][y] = Icons.dangerous;
+      notifyListeners();
+      return true;
+    } else {
+      icon[x][y] = Icons.egg;
+      notifyListeners();
+      return false;
+    }
+  }
 }
 
 class AI extends Brain {
@@ -239,9 +258,11 @@ class AI extends Brain {
   List<List<List<int>>> ship3pos = [];
   List<List<List<int>>> ship2pos = [];
   List<List<int>> ship1pos = [];
+  List<int> lastShot = [];
+  List<int> lastHit = [];
+  var brain;
 
-  @override
-  void init() {
+  AI(this.brain) {
     for (int i = 0; i < 10; i++) {
       List<IconData> temp = [];
       for (int j = 0; j < 10; j++) {
@@ -371,9 +392,6 @@ class AI extends Brain {
     ship3pos.shuffle();
     ship2pos.shuffle();
     ship1pos.shuffle();
-
-    clearBoard();
-    randomizeBoard();
   }
 
   void randomizeBoard() {
@@ -382,9 +400,7 @@ class AI extends Brain {
     }
     for (int i = 0; i < 2; i++) {
       for (List<int> j in ship4pos.removeAt(0)) {
-        if (ship[j[0] + 1][j[1] + 1] = false) {
-          ship[j[0]][j[1]] = true;
-        }
+        ship[j[0]][j[1]] = true;
       }
     }
     // for (int i = 0; i < 3; i++) {
@@ -420,8 +436,25 @@ class AI extends Brain {
     }
   }
 
-  void fire({required x, required y}) {
-    clearBoard();
-    randomizeBoard();
+  void fire({required int x, required int y}) {
+    if (ship[x][y] == true) {
+      icon[x][y] = Icons.dangerous;
+      notifyListeners();
+    } else {
+      icon[x][y] = Icons.egg;
+      notifyListeners();
+      AImove();
+    }
+  }
+
+  void AImove() {
+    if (lastShot.isEmpty) {
+      int x = Random().nextInt(10);
+      int y = Random().nextInt(10);
+      lastShot = [x, y];
+      if (brain.receiveHit(x, y)) {
+        lastHit = lastShot;
+      }
+    } else {}
   }
 }

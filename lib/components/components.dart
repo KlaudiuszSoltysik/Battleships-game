@@ -18,7 +18,7 @@ class Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: ready ? function : () {},
+      onTap: ready ? function : function, //() {},
       child: Padding(
         padding: EdgeInsets.all(10),
         child: Container(
@@ -119,7 +119,6 @@ class RandomGameGrid extends GameGrid {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<AI>().init();
     return Expanded(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

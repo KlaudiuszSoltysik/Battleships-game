@@ -11,7 +11,10 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => Brain()),
-        ChangeNotifierProvider(create: (context) => AI()),
+        ChangeNotifierProxyProvider<Brain, AI>(
+          update: (context, brain, previousMessages) => AI(brain),
+          create: (BuildContext context) => AI(null),
+        ),
       ],
       child: MyApp(),
     ),
@@ -23,8 +26,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<Brain>().init();
-
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
