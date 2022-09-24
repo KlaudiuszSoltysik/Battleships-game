@@ -24,7 +24,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.watch<Brain>().init();
-    context.watch<AI>().init();
 
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,

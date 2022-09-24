@@ -9,6 +9,7 @@ class Brain with ChangeNotifier {
   int ship2 = 0;
   int ship1 = 0;
   bool accept = false;
+  int segments = 0;
   bool lock = false;
   List<List<IconData>> icon = [];
 
@@ -71,7 +72,8 @@ class Brain with ChangeNotifier {
         }
       }
       notifyListeners();
-      if (checkLength()) {
+
+      if ((checkLength()) & (countSegments())) {
         accept = true;
       } else {
         accept = false;
@@ -87,7 +89,7 @@ class Brain with ChangeNotifier {
     ship1 = 0;
     accept = false;
     int shipLength;
-    int segments = 0;
+    segments = 0;
 
     for (int i = 0; i < 10; i++) {
       for (int j = 0; j < 10; j++) {
@@ -206,16 +208,23 @@ class Brain with ChangeNotifier {
               (icon[i][j - 1] == Icons.square_outlined)) {
             ship1++;
           }
-          segments++;
         }
       }
     }
-    if ((segments == 35) &
-        (ship1 == 5) &
+    if ((ship1 == 5) &
         (ship2 == 4) &
         (ship3 == 3) &
         (ship4 == 2) &
         (ship5 == 1)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  bool countSegments() {
+    segments = 5 * ship5 + 4 * ship4 + 3 * ship3 + 2 * ship2 + 1 * ship1;
+    if (segments == 35) {
       return true;
     } else {
       return false;
@@ -357,9 +366,42 @@ class AI extends Brain {
         ship1pos.add(temp);
       }
     }
+    ship5pos.shuffle();
+    ship4pos.shuffle();
+    ship3pos.shuffle();
+    ship2pos.shuffle();
+    ship1pos.shuffle();
+
+    clearBoard();
+    randomizeBoard();
   }
 
   void randomizeBoard() {
+    for (List<int> i in ship5pos.removeAt(0)) {
+      ship[i[0]][i[1]] = true;
+    }
+    for (int i = 0; i < 2; i++) {
+      for (List<int> j in ship4pos.removeAt(0)) {
+        if (ship[j[0] + 1][j[1] + 1] = false) {
+          ship[j[0]][j[1]] = true;
+        }
+      }
+    }
+    // for (int i = 0; i < 3; i++) {
+    //   for (List<int> j in ship3pos.removeAt(0)) {
+    //     ship[j[0]][j[1]] = true;
+    //   }
+    // }
+    // for (int i = 0; i < 4; i++) {
+    //   for (List<int> j in ship2pos.removeAt(0)) {
+    //     ship[j[0]][j[1]] = true;
+    //   }
+    // }
+    // for (int i = 0; i < 5; i++) {
+    //   List<int> temp = ship1pos.removeAt(0);
+    //   ship[temp[0]][temp[1]] = true;
+    // }
+
     for (int i = 0; i < 10; i++) {
       for (int j = 0; j < 10; j++) {
         if (ship[i][j] == true) {
@@ -367,7 +409,6 @@ class AI extends Brain {
         }
       }
     }
-    notifyListeners();
   }
 
   void clearBoard() {
@@ -377,7 +418,6 @@ class AI extends Brain {
         ship[i][j] = false;
       }
     }
-    notifyListeners();
   }
 
   void fire({required x, required y}) {

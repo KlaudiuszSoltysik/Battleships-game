@@ -119,6 +119,7 @@ class RandomGameGrid extends GameGrid {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<AI>().init();
     return Expanded(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
