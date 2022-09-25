@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'components.dart';
 import 'dart:math';
 
 class Brain with ChangeNotifier {
@@ -253,27 +252,19 @@ class Brain with ChangeNotifier {
 
 class AI extends Brain {
   List<List<bool>> ship = [];
-  List<List<List<int>>> ship5pos = [];
-  List<List<List<int>>> ship4pos = [];
-  List<List<List<int>>> ship3pos = [];
-  List<List<List<int>>> ship2pos = [];
-  List<List<int>> ship1pos = [];
+  final List<List<List<int>>> ship5pos = [];
+  final List<List<List<int>>> ship4pos = [];
+  final List<List<List<int>>> ship3pos = [];
+  final List<List<List<int>>> ship2pos = [];
+  final List<List<int>> ship1pos = [];
   List<int> lastShot = [];
   List<int> lastHit = [];
   var brain;
 
   AI(this.brain) {
     for (int i = 0; i < 10; i++) {
-      List<IconData> temp = [];
-      for (int j = 0; j < 10; j++) {
-        temp.add(Icons.square_outlined);
-      }
-      icon.add(temp);
-    }
-
-    for (int i = 0; i < 10; i++) {
       List<bool> temp = [];
-      for (int i = 0; i < 10; i++) {
+      for (int j = 0; j < 10; j++) {
         temp.add(false);
       }
       ship.add(temp);
@@ -436,7 +427,7 @@ class AI extends Brain {
     }
   }
 
-  void fire({required int x, required int y}) {
+  void receiveShot({required int x, required int y}) {
     if (ship[x][y] == true) {
       icon[x][y] = Icons.dangerous;
       notifyListeners();
@@ -452,9 +443,16 @@ class AI extends Brain {
       int x = Random().nextInt(10);
       int y = Random().nextInt(10);
       lastShot = [x, y];
-      if (brain.receiveHit(x, y)) {
-        lastHit = lastShot;
+      while (true) {
+        int x = Random().nextInt(10);
+        int y = Random().nextInt(10);
+        if (brain.receiveShot()) {
+          lastHit = lastShot;
+        } else {
+          break;
+        }
       }
     } else {}
+    notifyListeners();
   }
 }

@@ -10,10 +10,14 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => Brain()),
+        ChangeNotifierProvider(
+          create: (context) => Brain(),
+          lazy: false,
+        ),
         ChangeNotifierProxyProvider<Brain, AI>(
           update: (context, brain, previousMessages) => AI(brain),
           create: (BuildContext context) => AI(null),
+          lazy: false,
         ),
       ],
       child: MyApp(),

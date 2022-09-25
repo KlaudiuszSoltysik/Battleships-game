@@ -145,7 +145,7 @@ class _SquareState extends State<Square> {
   }
 
   void fire() {
-    context.read<AI>().fire(x: widget.x, y: widget.y);
+    context.read<AI>().receiveShot(x: widget.x, y: widget.y);
   }
 
   @override
